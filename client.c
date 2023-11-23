@@ -35,6 +35,8 @@ int main()
 
         free_bignumber(n1);
         free_bignumber(n2);
+        if (*op == '*')
+            free_bignumber(RESULT);
         free(op);
     }
 
