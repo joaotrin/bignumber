@@ -104,6 +104,21 @@ void get_char_decimals(bignumber n)
 
 void print_reversed_bignumber(bignumber n)
 {
+    int all_zeros = 1;
+    for (int i = 0; i < n->size; i++)
+    {
+        if (n->digits[i] != 0)
+        {
+            all_zeros = 0;
+            break;
+        }
+    }
+    if (all_zeros)
+    {
+        printf("0\n");
+        return;
+    }
+
     if (n->sign == '-')
         printf("-");
 
@@ -293,7 +308,34 @@ void subtract_bignumbers(bignumber n1, bignumber n2, bignumber* RESULT)
 }
 
 void multiply_bignumbers(bignumber n1, bignumber n2, bignumber* RESULT)
-{}
+{
+    bignumber product = malloc(sizeof(struct bignumber_struct));
+
+    if (n1->sign == n2->sign)
+        product->sign = '+';
+    else
+        product->sign = '-';
+
+    product->size = n1->size * n2->size;
+    product->digits = malloc(sizeof(char) * product->size);
+
+    for (int i = 0; i < product->size; i++)
+        product->digits[i] = 0;
+
+    int sum;
+    for (int i = 0; i < n1->size; i++)
+    {
+        int carry = 0;
+        for (int j = 0; j < n2->size; j++)
+        {
+            sum = product->digits[i+j] + (n1->digits[i] * n2->digits[j]) + carry;
+            product->digits[i+j] = sum % 10;
+            carry = sum / 10;
+        }
+    }
+
+    *RESULT = product;
+}
 
 void choose_operation(char op, bignumber n1, bignumber n2, bignumber* nLonger, bignumber* nShorter, bignumber* nBigger, bignumber* nSmaller, bignumber* RESULT)
 {
@@ -379,7 +421,9 @@ void choose_operation(char op, bignumber n1, bignumber n2, bignumber* nLonger, b
             break;
         
         case '*':
-            // not able to calculate yet
+
+            multiply_bignumbers(n1, n2, RESULT);
+
             break;
     }
 }

@@ -19,14 +19,6 @@ int main()
         bignumber n2 = init_bignumber();
         char* op = read_char();
 
-        // not able to calculate yet
-        if (*op == '*')
-        {
-            printf("*\n");
-            continue;
-        }
-        // -------------
-
         reverse_and_add_zero(n1);
         reverse_and_add_zero(n2);
 
