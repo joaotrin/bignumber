@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// functions develpment
+// functions development
 
 char* read_string()
 {
